@@ -137,7 +137,7 @@ void menu_backlash();
       }
     #endif
 
-    #if ENABLED(ADVANCED_PAUSE_FEATURE)
+    #if ENABLED(ADVANCED_PAUSE_FEATURE) && DISABLED(SPACE_SAVER)
       constexpr float extrude_maxlength = TERN(PREVENT_LENGTHY_EXTRUDE, EXTRUDE_MAXLENGTH, 999);
 
       EDIT_ITEM_FAST(float3, MSG_FILAMENT_UNLOAD, &fc_settings[active_extruder].unload_length, 0, extrude_maxlength);
@@ -373,11 +373,11 @@ void menu_backlash();
         EDIT_ITEM_FAST_N(float3, n, MSG_VMAX_EN, &planner.settings.max_feedrate_mm_s[E_AXIS_N(n)], 1, max_fr_edit_scaled.e);
     #endif
 
-    // M205 S Min Feedrate
-    EDIT_ITEM_FAST(float3, MSG_VMIN, &planner.settings.min_feedrate_mm_s, 0, 999);
+    // M205 S Min Feedrate - Disabled by TH3D to Save space, not used by users
+    //EDIT_ITEM_FAST(float3, MSG_VMIN, &planner.settings.min_feedrate_mm_s, 0, 999);
 
-    // M205 T Min Travel Feedrate
-    EDIT_ITEM_FAST(float3, MSG_VTRAV_MIN, &planner.settings.min_travel_feedrate_mm_s, 0, 999);
+    // M205 T Min Travel Feedrate - Disabled by TH3D to Save space, not used by users
+    //EDIT_ITEM_FAST(float3, MSG_VTRAV_MIN, &planner.settings.min_travel_feedrate_mm_s, 0, 999);
 
     END_MENU();
   }
@@ -476,24 +476,24 @@ void menu_backlash();
 
   #endif
 
-  // M851 - Z Probe Offsets
-  #if HAS_BED_PROBE
-    void menu_probe_offsets() {
-      START_MENU();
-      BACK_ITEM(MSG_ADVANCED_SETTINGS);
-      #if HAS_PROBE_XY_OFFSET
-        EDIT_ITEM(float31sign, MSG_ZPROBE_XOFFSET, &probe.offset.x, -(X_BED_SIZE), X_BED_SIZE);
-        EDIT_ITEM(float31sign, MSG_ZPROBE_YOFFSET, &probe.offset.y, -(Y_BED_SIZE), Y_BED_SIZE);
-      #endif
-      EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
+  // M851 - Z Probe Offsets - Disabled by TH3D to save space and prevent user confusion. Offsets should be set in firmware, not EEPROM.
+  //#if HAS_BED_PROBE
+    //void menu_probe_offsets() {
+      //START_MENU();
+      //BACK_ITEM(MSG_ADVANCED_SETTINGS);
+      //#if HAS_PROBE_XY_OFFSET
+        //EDIT_ITEM(float31sign, MSG_ZPROBE_XOFFSET, &probe.offset.x, -(X_BED_SIZE), X_BED_SIZE);
+        //EDIT_ITEM(float31sign, MSG_ZPROBE_YOFFSET, &probe.offset.y, -(Y_BED_SIZE), Y_BED_SIZE);
+      //#endif
+      //EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
 
-      #if ENABLED(PROBE_OFFSET_WIZARD)
-        SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);
-      #endif
+      //#if ENABLED(PROBE_OFFSET_WIZARD)
+        //SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);
+      //#endif
 
-      END_MENU();
-    }
-  #endif
+      //END_MENU();
+    //}
+  //#endif
 
 #endif // !SLIM_LCD_MENUS
 
@@ -553,10 +553,10 @@ void menu_advanced_settings() {
       );
     #endif
 
-    // M851 - Z Probe Offsets
-    #if HAS_BED_PROBE
-      if (!is_busy) SUBMENU(MSG_ZPROBE_OFFSETS, menu_probe_offsets);
-    #endif
+    // M851 - Z Probe Offsets - Redundant - Disabled by TH3D
+    //#if HAS_BED_PROBE
+      //if (!is_busy) SUBMENU(MSG_ZPROBE_OFFSETS, menu_probe_offsets);
+    //#endif
 
   #endif // !SLIM_LCD_MENUS
 
@@ -616,13 +616,13 @@ void menu_advanced_settings() {
     SUBMENU(MSG_PASSWORD_SETTINGS, password.access_menu_password);
   #endif
 
-  #if ENABLED(EEPROM_SETTINGS) && DISABLED(SLIM_LCD_MENUS)
-    CONFIRM_ITEM(MSG_INIT_EEPROM,
-      MSG_BUTTON_INIT, MSG_BUTTON_CANCEL,
-      ui.init_eeprom, nullptr,
-      GET_TEXT(MSG_INIT_EEPROM), (const char *)nullptr, PSTR("?")
-    );
-  #endif
+  //#if ENABLED(EEPROM_SETTINGS) && DISABLED(SLIM_LCD_MENUS) - Moved to Config Menu by TH3D
+    //CONFIRM_ITEM(MSG_INIT_EEPROM,
+      //MSG_BUTTON_INIT, MSG_BUTTON_CANCEL,
+      //ui.init_eeprom, nullptr,
+      //GET_TEXT(MSG_INIT_EEPROM), (const char *)nullptr, PSTR("?")
+    //);
+  //#endif
 
   END_MENU();
 }

@@ -351,6 +351,11 @@ void menu_configuration() {
   #elif HAS_BED_PROBE
     EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
   #endif
+  
+  //Moved here by TH3D
+  #if ENABLED(PROBE_OFFSET_WIZARD)
+    SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);
+  #endif
 
   //
   // Set Fan Controller speed
@@ -398,7 +403,7 @@ void menu_configuration() {
     SUBMENU(MSG_RETRACT, menu_config_retract);
   #endif
 
-  #if HAS_FILAMENT_SENSOR
+  #if HAS_FILAMENT_SENSOR && DISABLED(SPACE_SAVER)
     EDIT_ITEM(bool, MSG_RUNOUT_SENSOR, &runout.enabled, runout.reset);
   #endif
 
@@ -414,10 +419,18 @@ void menu_configuration() {
 
   #if ENABLED(EEPROM_SETTINGS)
     ACTION_ITEM(MSG_STORE_EEPROM, ui.store_settings);
-    if (!busy) ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);
+    //if (!busy) ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings); //Disabled by TH3D
   #endif
+  
+  //if (!busy) ACTION_ITEM(MSG_RESTORE_DEFAULTS, ui.reset_settings); //Disabled by TH3D
 
-  if (!busy) ACTION_ITEM(MSG_RESTORE_DEFAULTS, ui.reset_settings);
+  #if ENABLED(EEPROM_SETTINGS)
+    CONFIRM_ITEM(MSG_INIT_EEPROM,
+      MSG_BUTTON_RESET, MSG_BUTTON_CANCEL,
+      ui.init_eeprom, nullptr,
+      GET_TEXT(MSG_INIT_EEPROM), (const char *)nullptr, PSTR("?")
+    );
+  #endif
 
   END_MENU();
 }

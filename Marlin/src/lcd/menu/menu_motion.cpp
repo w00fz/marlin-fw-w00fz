@@ -368,10 +368,11 @@ void menu_motion() {
       GCODES_ITEM(MSG_LEVEL_BED, PSTR("G28\nG29"));
     #endif
 
-    if (all_axes_homed() && leveling_is_valid()) {
-      bool show_state = planner.leveling_active;
-      EDIT_ITEM(bool, MSG_BED_LEVELING, &show_state, _lcd_toggle_bed_leveling);
-    }
+	//Disabled by TH3D
+    //if (all_axes_homed() && leveling_is_valid()) {
+      //bool show_state = planner.leveling_active;
+      //EDIT_ITEM(bool, MSG_BED_LEVELING, &show_state, _lcd_toggle_bed_leveling);
+    //}
 
     #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
       editable.decimal = planner.z_fade_height;
@@ -385,7 +386,7 @@ void menu_motion() {
   #endif
 
   #if ENABLED(Z_MIN_PROBE_REPEATABILITY_TEST)
-    GCODES_ITEM(MSG_M48_TEST, PSTR("G28 O\nM48 P10"));
+    GCODES_ITEM(MSG_M48_TEST, PSTR("G28\nM48 P10"));
   #endif
 
   //

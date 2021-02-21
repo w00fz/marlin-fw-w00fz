@@ -30,19 +30,28 @@
 #endif
 
 #define BOARD_INFO_NAME   "TH3D EZBoard"
-#define BOARD_WEBSITE_URL "th3dstudio.com"
+//spacing to center website on lcd
+#define BOARD_WEBSITE_URL "   TH3DStudio.com"
 
 //
 // Servos
 //
-#define SERVO0_PIN                         P2_04
+#if ENABLED(V3_EZABL_ON_SERVO)
+  #define SERVO0_PIN                          -1
+#else
+  #define SERVO0_PIN                       P2_04
+#endif
 
 //
 // Limit Switches
 //
 #define X_STOP_PIN                         P1_24
 #define Y_STOP_PIN                         P1_25
-#define Z_STOP_PIN                         P1_26
+#if ENABLED(V3_EZABL_ON_SERVO)
+  #define Z_STOP_PIN                       P2_04
+#else
+  #define Z_STOP_PIN                       P1_26
+#endif
 
 //
 // Filament Runout Sensor
@@ -103,13 +112,6 @@
 #endif
 
 #define TEMP_BED_PIN                    P0_24_A1  // Analog Input P0_24
-#define TEMP_1_PIN                      P0_25_A2  // Analog Input P0_25
-
-#if ENABLED(FILAMENT_WIDTH_SENSOR)
-  #define FILWIDTH_PIN                  P0_26_A3  // Analog Input P0_26
-#else
-  #define TEMP_2_PIN                    P0_26_A3  // Analog Input P0_26
-#endif
 
 //
 // Heaters / Fans
@@ -140,6 +142,8 @@
 //
 
 #define SDCARD_CONNECTION                ONBOARD
+
+#define SD_DETECT_PIN                      P0_25 //SD_CD
 
 #define SCK_PIN                            P0_07
 #define MISO_PIN                           P0_08
@@ -177,6 +181,19 @@
   #define LCD_PINS_ENABLE                  P0_18
   #define LCD_PINS_D4                      P0_15
   #define KILL_PIN                         P2_11
+#elif ENABLED(MKS_MINI_12864)
+  #define DOGLCD_CS                        P0_16
+  #define DOGLCD_A0                        P0_15
+  #define DOGLCD_SCK                       P1_31
+  #define DOGLCD_MOSI                      P0_18
+  #define BTN_ENC                          P1_30
+  #define BTN_EN1                          P3_26
+  #define BTN_EN2                          P3_25
+  #define LCD_CONTRAST_INIT                160
+  #define LCD_CONTRAST_MIN                 120
+  #define LCD_CONTRAST_MAX                 180 
+  #define FORCE_SOFT_SPI
+  #define LCD_BACKLIGHT_PIN                -1
 #elif HAS_WIRED_LCD
-  #error "Only the CR10_STOCKDISPLAY is supported with TH3D EZBoard."
+  #error "Only CR10_STOCKDISPLAY or MKS_MINI_12864 are supported with TH3D EZBoard."
 #endif
