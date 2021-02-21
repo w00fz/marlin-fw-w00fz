@@ -20,13 +20,13 @@
 // *************   CREALITY PRINTERS W/SKR E3 MINI BOARD    *****************
 //===========================================================================
 
-//#define ENDER3_SKR_E3_MINI
+#define ENDER3_SKR_E3_MINI
 //#define ENDER5_SKR_E3_MINI
 
 // Uncomment what SKR E3 Mini Board Version you are using
 //#define SKR_E3_MINI_V1
 //#define SKR_E3_MINI_V1_2
-//#define SKR_E3_MINI_V2_0
+#define SKR_E3_MINI_V2_0
 
 // EZOut Filament Sensor
 // This board only works with this version of our sensor kit: https://www.th3dstudio.com/product/ezout-filament-sensor-kit-standard/
@@ -140,7 +140,7 @@
 // Example EStep Values: TH3D Aluminum Extruder - 95 ESteps, TH3D Tough Extruder - 410 ESteps, BMG Extruder - 415 ESteps
 // When installing a Tough Extruder or E3D Titan or Bondtech that is Geared you likely need to enable the REVERSE_E_MOTOR_DIRECTION option
 //#define CUSTOM_ESTEPS
-#define CUSTOM_ESTEPS_VALUE 410
+#define CUSTOM_ESTEPS_VALUE 139
 //#define REVERSE_E_MOTOR_DIRECTION
 
 // FILAMENT SENSOR UNLOAD SETTINGS -----------------
